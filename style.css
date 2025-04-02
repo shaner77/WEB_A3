@@ -1,4 +1,4 @@
-@media (max-width: 450px){
+@media (max-width: 550px){
     .responsive-columns {
         display: flex;
         flex-wrap: wrap; /* Ensure items wrap on small screens */
@@ -10,6 +10,9 @@
     img{
         justify-content: center;
         width: 80%;
+    }
+    #byColour{
+        flex-direction: column;
     }
 }
 
@@ -75,9 +78,11 @@ select {
 /* Aside to display the calculated resistance and tolerance */
 aside#resistorResult {
     flex: 1;
-    border: 2px solid black;
+    border: 2px solid white;
     padding: 10px;
-    background: lightgray;
+    background: #3C096C;
+    color: white;
+    border-radius: 25px;
 }
 
 /* Aside to display the calculated resistance and tolerance */
@@ -85,9 +90,12 @@ aside#result {
     flex: 1;
     border: 2px solid black;
     padding: 10px;
-    background: lightgray;
 }
 
+.header{
+    border-radius: 0px 0px 25px 25px;
+    background-color: lightgrey;
+}
 
 .container-eg-btn-2 {
     font-family: sans-serif;
@@ -99,7 +107,6 @@ aside#result {
     margin: 0 auto 10px;
     padding: .5em;
     line-height: normal;
-    background-color: #cc99ff;
 }
 .container-eg-btn-2 .button {
     color: black;

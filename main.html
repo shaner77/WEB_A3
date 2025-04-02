@@ -20,18 +20,12 @@
       justify-content: center;
       align-items: center;
     } 
-    .container-eg-btn-2{
-      background-color: #cc99ff;
-    }
-    .byResistance{
-      background-color: red;
-    }
     </style>
 </head>
 
 <body>
   <!-- Navigation menu -->
-    <div>
+    <div class="header">
         <div class="container-eg-btn-2">
             <a class="button button-6" onclick="changePage('extras.html')">Extra Features</a>
         </div>
@@ -52,12 +46,14 @@
   <hr>
   <br>
 
+  
   <label>Identifier: </label>
   <select class="form-select" id="resistorMode">
     <option value="" disabled selected>Select</option>
     <option value="Colour">By Colour Bands</option>
     <option value="Resistance">By Resistance Value</option>
   </select>
+
 
   <br><br>
   <hr>
