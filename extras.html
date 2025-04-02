@@ -39,6 +39,7 @@
       <option value="Voltage">Voltage</option>
       <option value="Current">Current</option>
       <option value="Resistance">Resistance</option>
+      <option value="Power">Power</option>
     </select>
   
     <!-- New container for inputs and result display -->
@@ -73,14 +74,14 @@
       <!-- Right container: Calculation result display -->
       <aside id="result" style="border: 2px solid black; padding: 10px;">
         <h2 id="calcType">Calculated</h2>
-        <h2 id="resultValue">--</h2>
-      </aside>
+        <h2 id="resultValue" style="display:inline; font-size: 30px;">--</h2>
+        <h2 id="unit" style="display:inline;">--</h2>
+    </aside>
+        
     </div>
   </div>
   <br>
   <hr>
-
-
 
     <!-- battery life-->
     <!-- Voltage divider-->
@@ -90,47 +91,90 @@
         // Show/hide based on mode selection.
             $("#VIRselector").on("change", function () {
                 let mode = $(this).val();
-                
+                $("#vInput, #iInput, #rInput").val("");
+                $("#resultValue").text("--");
                 if (mode === "Voltage") {
                     $("#VIR_V").hide();
                     $("#VIR_I").show();
                     $("#VIR_R").show();
                     $("#result").show();
-                    $("#calcType").text("Voltage");
-                    $("#resultValue").text("-- V");
+                    $("#calcType").text("Voltage [I x R]");
+                    $("#unit").text("V");
                 } else if (mode === "Current") {
                     $("#VIR_V").show();
                     $("#VIR_I").hide();
                     $("#VIR_R").show();
                     $("#result").show();
-                    $("#calcType").text("Current");
-                    $("#resultValue").text("-- A");
+                    $("#calcType").text("Current [V x R]");
+                    $("#unit").text("A");
                 }else if (mode === "Resistance") {
                     $("#VIR_V").show();
                     $("#VIR_I").show();
                     $("#VIR_R").hide();
                     $("#VIR_P").show();
                     $("#result").show();
-                    $("#calcType").text("Resistance");
-                    $("#resultValue").text("-- Ω");
+                    $("#calcType").text("Resistance [V / I]");
+                    $("#unit").text("Ω");
+                }else if (mode === "Power") {
+                    $("#VIR_V").show();
+                    $("#VIR_I").show();
+                    $("#VIR_R").hide();
+                    $("#result").show();
+                    $("#calcType").text("Power [V x I]");
+                    $("#unit").text("W");
                 }
 
             });
-            $("#iInput, #rInput").on("input", function() {
+            $("#vInput, #iInput, #rInput").on("input", function() {
                 let mode = $("#VIRselector").val();
-
                 if (mode === "Voltage") {
                     if ($("#iInput").val().trim() !== "" && $("#rInput").val().trim() !== "") {
-                        let iValue = parseInt($("#iInput").val().trim(), 10);
-                        let rValue = parseInt($("#rInput").val().trim(), 10);
+                        let iValue = parseFloat($("#iInput").val().trim(), 10);
+                        let rValue = parseFloat($("#rInput").val().trim(), 10);
                         let calculated = iValue * rValue;
-                        $("#resultValue").text(calculated);
-                        $("#resultValue").append(" hi");
+                        $("#resultValue").text(calculated.toFixed(2));
+                    } else {
+                        $("#resultValue").text("--");
+                    }
+                }
+                if (mode === "Current") {
+                    if ($("#vInput").val().trim() !== "" && $("#rInput").val().trim() !== "") {
+                        let vValue = parseFloat($("#vInput").val().trim(), 10);
+                        let rValue = parseFloat($("#rInput").val().trim(), 10);
+                        let calculated = vValue / rValue;
+                        if (calculated < 1){
+                            $("#unit").text("mA");
+                            $("#resultValue").text((calculated*1000).toFixed(2));
+                        } else{
+                            $("#resultValue").text(calculated.toFixed(2));
+                            $("#unit").text("A");
+                        }
+                    } else {
+                        $("#resultValue").text("--");
+                    }
+                }
+                if (mode === "Resistance") {
+                    if ($("#iInput").val().trim() !== "" && $("#vInput").val().trim() !== "") {
+                        let iValue = parseFloat($("#iInput").val().trim(), 10);
+                        let vValue = parseFloat($("#vInput").val().trim(), 10);
+                        let calculated = vValue / iValue;
+                        $("#resultValue").text(calculated.toFixed(2));
+                    } else {
+                        $("#resultValue").text("--");
+                    }
+                }
+                if (mode === "Power") {
+                    if ($("#iInput").val().trim() !== "" && $("#vInput").val().trim() !== "") {
+                        let iValue = parseFloat($("#iInput").val().trim(), 10);
+                        let vValue = parseFloat($("#vInput").val().trim(), 10);
+                        let calculated = vValue * iValue;
+                        $("#resultValue").text(calculated.toFixed(2));
                     } else {
                         $("#resultValue").text("--");
                     }
                 }
             });
+
         });
     </script>
 </body>
