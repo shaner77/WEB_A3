@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Link to your global and device-specific stylesheets -->
   <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="functions.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     /* Hide modes until one is selected */
     #VIR_V,
@@ -23,16 +23,15 @@
 
 <body>
 
-    <!-- Navigation menu -->
-    <div>
+    <!---------------------   Navigation Menu    ---------------------------->
+    <div class="header">
         <div class="container-eg-btn-2">
-            <a class="button button-6" onclick="changePage('main.html')">Main Page</a>
+          <a class="button button-6" onclick="changePage('main.html')">Main Page</a>
         </div>
-        <hr>
-    </div>
+      </div>
 
-    <!-- V=IR Calculator -->
-<div>
+    <!---------------------   V=IR calculator    ---------------------------->
+    <div>
     <h1>V = IR Calculator</h1>
     <label>Solve For: </label>
     <select class="form-select" id="VIRselector">
@@ -40,6 +39,7 @@
       <option value="Voltage">Voltage</option>
       <option value="Current">Current</option>
       <option value="Resistance">Resistance</option>
+      <option value="Power">Power</option>
     </select>
   
     <!-- New container for inputs and result display -->
@@ -47,26 +47,23 @@
       
       <!-- Left container: Input fields -->
       <div id="virInputs">
-        <!-- By Resistance mode content -->
+        <!-- Outline for various input types -->
         <div id="VIR_V">
           <br>
-          <label>Voltage: </label>
+          <label>Voltage (V): </label>
           <input type="text" id="vInput" size="9" style="text-align: right;">
-          <label> (V)</label>
         </div>
   
         <div id="VIR_I">
           <br>
-          <label>Current: </label>
+          <label>Current (A): </label>
           <input type="text" id="iInput" size="9" style="text-align: right;">
-          <label> (A)</label>
         </div>
   
         <div id="VIR_R">
           <br>
-          <label>Resistance: </label>
-          <input type="text" id="rInput" size="7" style="text-align: right;">
-          <label> (Ω)</label>
+          <label>Resistance (Ω): </label>
+          <input type="text" id="rInput" size="9" style="text-align: right;">
         </div>
   
       </div>
@@ -74,66 +71,61 @@
       <!-- Right container: Calculation result display -->
       <aside id="result" style="border: 2px solid black; padding: 10px;">
         <h2 id="calcType">Calculated</h2>
-        <h2 id="resultValue">--</h2>
-      </aside>
+        <h2 id="formula"></h2>
+        <h2 id="resultValue" style="display:inline; font-size: 30px;">--</h2>
+        <h2 id="unit" style="display:inline;">--</h2>
+    </aside>
+        
     </div>
   </div>
   <br>
   <hr>
 
+    <!---------------------   Voltage divider    ---------------------------->
 
+    <h1>Voltage Divider Calculator</h1>
+    <!-- Resistor image with overlay bands -->
+    <div style="text-align: center;">
+        <!-- Resistor image container with overlay bands -->
+        <div class="resistor-container" style="display: inline-block;">
+        <img src="voltage_div.png"  alt="Resistor Image">
+        <!-- Resistor 1 overlays -->
+        <div class="vd1_band band5"></div>
+        <div class="vd1_sband band6"></div>
+        <div class="vd1_sband band7"></div>
+        <div class="vd1_band band8"></div>
+        <!-- Resistor 2 overlays -->
+        <div class="vd2_band band9"></div>
+        <div class="vd2_sband band10"></div>
+        <div class="vd2_sband band11"></div>
+        <div class="vd2_band band12"></div>
+        </div>
+    </div>
+    <!-- Input feilds for V divider -->
+    <div>  
+        <label>Voltage in (V): </label>
+        <input type="text" id="VIN" size="7" style="text-align: right;">
+    </div>
+    <br>
+    <div>
+        <label>Resistor 1 (Ω): </label>
+        <input type="text" id="R1" size="7" style="text-align: right;">
+    </div>
+    <br>
+    <div>
+        <label>Resistor 2 (Ω): </label>
+        <input type="text" id="R2" size="7" style="text-align: right;">
+    </div>
 
-    <!-- battery life-->
-    <!-- Voltage divider-->
+    <!-- Vout Result -->
+        <br>
+        <aside id="resistorResult">
+            <h2>Voltage Output</h2>
+            <h2 id="voutResult">--</h2>
+        </aside>
+    <hr>
+    <br>
 
-    <script>
-        $(document).ready(function () {
-        // Show/hide based on mode selection.
-            $("#VIRselector").on("change", function () {
-                let mode = $(this).val();
-                
-                if (mode === "Voltage") {
-                    $("#VIR_V").hide();
-                    $("#VIR_I").show();
-                    $("#VIR_R").show();
-                    $("#result").show();
-                    $("#calcType").text("Voltage");
-                    $("#resultValue").text("-- V");
-                } else if (mode === "Current") {
-                    $("#VIR_V").show();
-                    $("#VIR_I").hide();
-                    $("#VIR_R").show();
-                    $("#result").show();
-                    $("#calcType").text("Current");
-                    $("#resultValue").text("-- A");
-                }else if (mode === "Resistance") {
-                    $("#VIR_V").show();
-                    $("#VIR_I").show();
-                    $("#VIR_R").hide();
-                    $("#VIR_P").show();
-                    $("#result").show();
-                    $("#calcType").text("Resistance");
-                    $("#resultValue").text("-- Ω");
-                }
-
-            });
-            $("#iInput, #rInput").on("input", function() {
-                let mode = $("#VIRselector").val();
-
-                if (mode === "Voltage") {
-                    if ($("#iInput").val().trim() !== "" && $("#rInput").val().trim() !== "") {
-                        let iValue = parseInt($("#iInput").val().trim(), 10);
-                        let rValue = parseInt($("#rInput").val().trim(), 10);
-                        let calculated = iValue * rValue;
-                        $("#resultValue").text(calculated);
-                        $("#resultValue").append(" hi");
-                    } else {
-                        $("#resultValue").text("--");
-                    }
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
