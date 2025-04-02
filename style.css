@@ -1,5 +1,62 @@
-@media only screen and(max-width: 300px){
-    .text {
-        font-size: 11px;
+@media only screen and(max-width: 390px){
+    .responsive-columns {
+        display: flex;
+        flex-wrap: wrap; /* Ensure items wrap on small screens */
+        flex-direction: row; /* Stack items vertically on small screens */
     }
+    .responsive-columns .button {
+        width: 40px;
+    }
+}
+
+
+.resistor-container {
+    position: relative;
+    display: inline-block; /* Keeps the container only as wide as the image */
+  }
+  
+  .band {
+    position: absolute;
+    /* Default size and style for the bands - adjust as needed */
+    width: 20px;
+    height: 98px;
+    background-color: transparent; /* Will later be set dynamically or via a class */
+    /* For smooth edges, you might use: */
+    /* border-radius: 5px; */
+  }
+  .sband {
+    position: absolute;
+    /* Default size and style for the bands - adjust as needed */
+    width: 20px;
+    height: 81px;
+    background-color: transparent; /* Will later be set dynamically or via a class */
+    /* For smooth edges, you might use: */
+    /* border-radius: 5px; */
+  }
+  
+  /* Adjust these positions to place the bands exactly over your image */
+  .band1 { top: 31%; left: 32%; }
+  .band2 { top: 34%; left: 42%; }
+  .band3 { top: 34%; left: 55%; }
+  .band4 { top: 31%; left: 65%; }
+
+/* Flex container for the colour mode inputs and the result */
+#byColourContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Selections take one flex unit */
+#byColourSelections {
+    flex: 1;
+}
+
+/* Aside to display the calculated resistance and tolerance */
+aside#resistorResult {
+    flex: 1;
+    border: 2px solid black;
+    padding: 10px;
+    background: lightgray;
 }
