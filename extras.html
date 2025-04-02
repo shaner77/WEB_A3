@@ -22,16 +22,15 @@
 
 <body>
 
-    <!-- Navigation menu -->
-    <div>
+    <!---------------------   Navigation Menu    ---------------------------->
+    <div class="nav_header">
         <div class="container-eg-btn-2">
-            <a class="button button-6" onclick="changePage('main.html')">Main Page</a>
+          <a class="button button-6" onclick="changePage('main.html')">Main Page</a>
         </div>
-        <hr>
-    </div>
+      </div>
 
-    <!-- V=IR Calculator -->
-<div>
+    <!---------------------   V=IR calculator    ---------------------------->
+    <div>
     <h1>V = IR Calculator</h1>
     <label>Solve For: </label>
     <select class="form-select" id="VIRselector">
@@ -83,99 +82,278 @@
   <br>
   <hr>
 
-    <!-- battery life-->
-    <!-- Voltage divider-->
+    <!---------------------   Voltage divider    ---------------------------->
+
+    <h1>Voltage Divider Calculator</h1>
+    <!-- Resistor image with overlay bands -->
+    <div style="text-align: center;">
+        <!-- Resistor image container with overlay bands -->
+        <div class="resistor-container" style="display: inline-block;">
+        <img src="voltage_div.png" width="600px" alt="Resistor Image">
+        <!-- Resistor 1 overlays -->
+        <div class="vd1_band band5"></div>
+        <div class="vd1_sband band6"></div>
+        <div class="vd1_sband band7"></div>
+        <div class="vd1_band band8"></div>
+        <!-- Resistor 2 overlays -->
+        <div class="vd2_band band9"></div>
+        <div class="vd2_sband band10"></div>
+        <div class="vd2_sband band11"></div>
+        <div class="vd2_band band12"></div>
+        </div>
+    </div>
+    <div>
+        <label>Voltage in: </label>
+        <input type="text" id="VIN" size="7" style="text-align: right;">
+        <label> (V)</label>
+    </div>
+    <br>
+    <div>
+        <label>Resistor 1: </label>
+        <input type="text" id="R1" size="7" style="text-align: right;">
+        <label> (Ω)</label>
+    </div>
+    <br>
+    <div>
+        <label>Resistor 2: </label>
+        <input type="text" id="R2" size="7" style="text-align: right;">
+        <label> (Ω)</label>
+    </div>
+
+    <!-- Vout Result -->
+        <br>
+        <aside id="resistorResult">
+            <h2>Voltage Output</h2>
+            <h2 id="voutResult">--</h2>
+        </aside>
+    <hr>
+    <br>
+
 
     <script>
-        $(document).ready(function () {
-        // Show/hide based on mode selection.
-            $("#VIRselector").on("change", function () {
-                let mode = $(this).val();
-                $("#vInput, #iInput, #rInput").val("");
-                $("#resultValue").text("--");
-                if (mode === "Voltage") {
-                    $("#VIR_V").hide();
-                    $("#VIR_I").show();
-                    $("#VIR_R").show();
-                    $("#result").show();
-                    $("#calcType").text("Voltage [I x R]");
-                    $("#unit").text("V");
-                } else if (mode === "Current") {
-                    $("#VIR_V").show();
-                    $("#VIR_I").hide();
-                    $("#VIR_R").show();
-                    $("#result").show();
-                    $("#calcType").text("Current [V x R]");
-                    $("#unit").text("A");
-                }else if (mode === "Resistance") {
-                    $("#VIR_V").show();
-                    $("#VIR_I").show();
-                    $("#VIR_R").hide();
-                    $("#VIR_P").show();
-                    $("#result").show();
-                    $("#calcType").text("Resistance [V / I]");
-                    $("#unit").text("Ω");
-                }else if (mode === "Power") {
-                    $("#VIR_V").show();
-                    $("#VIR_I").show();
-                    $("#VIR_R").hide();
-                    $("#result").show();
-                    $("#calcType").text("Power [V x I]");
-                    $("#unit").text("W");
-                }
 
-            });
-            $("#vInput, #iInput, #rInput").on("input", function() {
-                let mode = $("#VIRselector").val();
-                if (mode === "Voltage") {
-                    if ($("#iInput").val().trim() !== "" && $("#rInput").val().trim() !== "") {
-                        let iValue = parseFloat($("#iInput").val().trim(), 10);
-                        let rValue = parseFloat($("#rInput").val().trim(), 10);
-                        let calculated = iValue * rValue;
-                        $("#resultValue").text(calculated.toFixed(2));
-                    } else {
-                        $("#resultValue").text("--");
-                    }
-                }
-                if (mode === "Current") {
-                    if ($("#vInput").val().trim() !== "" && $("#rInput").val().trim() !== "") {
-                        let vValue = parseFloat($("#vInput").val().trim(), 10);
-                        let rValue = parseFloat($("#rInput").val().trim(), 10);
-                        let calculated = vValue / rValue;
-                        if (calculated < 1){
-                            $("#unit").text("mA");
-                            $("#resultValue").text((calculated*1000).toFixed(2));
-                        } else{
-                            $("#resultValue").text(calculated.toFixed(2));
-                            $("#unit").text("A");
-                        }
-                    } else {
-                        $("#resultValue").text("--");
-                    }
-                }
-                if (mode === "Resistance") {
-                    if ($("#iInput").val().trim() !== "" && $("#vInput").val().trim() !== "") {
-                        let iValue = parseFloat($("#iInput").val().trim(), 10);
-                        let vValue = parseFloat($("#vInput").val().trim(), 10);
-                        let calculated = vValue / iValue;
-                        $("#resultValue").text(calculated.toFixed(2));
-                    } else {
-                        $("#resultValue").text("--");
-                    }
-                }
-                if (mode === "Power") {
-                    if ($("#iInput").val().trim() !== "" && $("#vInput").val().trim() !== "") {
-                        let iValue = parseFloat($("#iInput").val().trim(), 10);
-                        let vValue = parseFloat($("#vInput").val().trim(), 10);
-                        let calculated = vValue * iValue;
-                        $("#resultValue").text(calculated.toFixed(2));
-                    } else {
-                        $("#resultValue").text("--");
-                    }
-                }
-            });
+    //---------------------VIR Calculator functions----------------------
+
+    $(document).ready(function () {
+    // Show/hide based on mode selection.
+        $("#VIRselector").on("change", function () {
+            let mode = $(this).val();
+            $("#vInput, #iInput, #rInput").val("");
+            $("#resultValue").text("--");
+            if (mode === "Voltage") {
+                $("#VIR_V").hide();
+                $("#VIR_I").show();
+                $("#VIR_R").show();
+                $("#result").show();
+                $("#calcType").text("Voltage [I x R]");
+                $("#unit").text("V");
+            } else if (mode === "Current") {
+                $("#VIR_V").show();
+                $("#VIR_I").hide();
+                $("#VIR_R").show();
+                $("#result").show();
+                $("#calcType").text("Current [V x R]");
+                $("#unit").text("A");
+            }else if (mode === "Resistance") {
+                $("#VIR_V").show();
+                $("#VIR_I").show();
+                $("#VIR_R").hide();
+                $("#VIR_P").show();
+                $("#result").show();
+                $("#calcType").text("Resistance [V / I]");
+                $("#unit").text("Ω");
+            }else if (mode === "Power") {
+                $("#VIR_V").show();
+                $("#VIR_I").show();
+                $("#VIR_R").hide();
+                $("#result").show();
+                $("#calcType").text("Power [V x I]");
+                $("#unit").text("W");
+            }
 
         });
+        $("#vInput, #iInput, #rInput").on("input", function() {
+            let mode = $("#VIRselector").val();
+            if (mode === "Voltage") {
+                if ($("#iInput").val().trim() !== "" && $("#rInput").val().trim() !== "") {
+                    let iValue = parseFloat($("#iInput").val().trim(), 10);
+                    let rValue = parseFloat($("#rInput").val().trim(), 10);
+                    let calculated = iValue * rValue;
+                    $("#resultValue").text(calculated.toFixed(2));
+                } else {
+                    $("#resultValue").text("--");
+                }
+            }
+            if (mode === "Current") {
+                if ($("#vInput").val().trim() !== "" && $("#rInput").val().trim() !== "") {
+                    let vValue = parseFloat($("#vInput").val().trim(), 10);
+                    let rValue = parseFloat($("#rInput").val().trim(), 10);
+                    let calculated = vValue / rValue;
+                    if (calculated < 1){
+                        $("#unit").text("mA");
+                        $("#resultValue").text((calculated*1000).toFixed(2));
+                    } else{
+                        $("#resultValue").text(calculated.toFixed(2));
+                        $("#unit").text("A");
+                    }
+                } else {
+                    $("#resultValue").text("--");
+                }
+            }
+            if (mode === "Resistance") {
+                if ($("#iInput").val().trim() !== "" && $("#vInput").val().trim() !== "") {
+                    let iValue = parseFloat($("#iInput").val().trim(), 10);
+                    let vValue = parseFloat($("#vInput").val().trim(), 10);
+                    let calculated = vValue / iValue;
+                    $("#resultValue").text(calculated.toFixed(2));
+                } else {
+                    $("#resultValue").text("--");
+                }
+            }
+            if (mode === "Power") {
+                if ($("#iInput").val().trim() !== "" && $("#vInput").val().trim() !== "") {
+                    let iValue = parseFloat($("#iInput").val().trim(), 10);
+                    let vValue = parseFloat($("#vInput").val().trim(), 10);
+                    let calculated = vValue * iValue;
+                    $("#resultValue").text(calculated.toFixed(2));
+                } else {
+                    $("#resultValue").text("--");
+                }
+            }
+        });
+    });
+
+    //---------------------Voltage Divider functions----------------------
+
+    function autoCalculateByResistance(selection) {
+      // Choose the proper input value and result display based on selection.
+      var inputVal = (selection === 1) ? $("#R1").val() : $("#R2").val();
+      var resultSelector = (selection === 1) ? "#resultValue" : "#resultValue2";
+      
+      var R = parseFloat(inputVal);
+      if (!R || R <= 0) {
+        if (selection === 1) {
+          $(".vd1_band.band5, .vd1_sband.band6, .vd1_sband.band7, .vd1_band.band8").css("background-color", "transparent");
+        } else {
+          $(".vd2_band.band9, .vd2_sband.band10, .vd2_sband.band11, .vd2_band.band12").css("background-color", "transparent");
+        }
+        return;
+      }
+      
+      // Reverse maps for digits and multipliers.
+      var digitToColor = {
+        0: "Black", 1: "Brown", 2: "Red", 3: "Orange", 4: "Yellow",
+        5: "Green", 6: "Blue", 7: "Purple", 8: "Gray", 9: "White"
+      };
+      var multiplierToColor = {
+        1: "Black", 10: "Brown", 100: "Red", 1000: "Orange",
+        10000: "Yellow", 100000: "Green", 1000000: "Blue"
+      };
+      var allowedMultipliers = [1, 10, 100, 1000, 10000, 100000, 1000000];
+      
+      var validCombo = false;
+      var chosenMultiplier = null;
+      var quotient = null;
+      
+      for (var i = 0; i < allowedMultipliers.length; i++) {
+        var m = allowedMultipliers[i];
+        if (R % m === 0) {
+          quotient = R / m;
+          if (quotient < 10 || (quotient >= 10 && quotient < 100)) {
+            validCombo = true;
+            chosenMultiplier = m;
+            break;
+          }
+        }
+      }
+      
+      if (!validCombo || quotient === null) {
+        if (selection === 1) {
+          $(".vd1_band.band5, .vd1_sband.band6, .vd1_sband.band7, .vd1_band.band8").css("background-color", "transparent");
+        } else {
+          $(".vd2_band.band9, .vd2_sband.band10, .vd2_sband.band11, .vd2_band.band12").css("background-color", "transparent");
+        }
+        return;
+      }
+      
+      var firstDigit = 0;
+      var secondDigit = 0;
+      if (quotient < 10) {
+        firstDigit = 0;
+        secondDigit = quotient;
+      } else {
+        firstDigit = Math.floor(quotient / 10);
+        secondDigit = quotient % 10;
+      }
+      
+      var calculatedResistance = ((firstDigit * 10) + secondDigit) * chosenMultiplier;
+      var displayValue;
+      if (calculatedResistance >= 1000000) {
+        displayValue = (calculatedResistance / 1000000).toFixed(4) + " MΩ";
+      } else if (calculatedResistance >= 1000) {
+        displayValue = (calculatedResistance / 1000).toFixed(4) + " kΩ";
+      } else {
+        displayValue = calculatedResistance.toFixed(4) + " Ω";
+      }
+      displayValue += " (±5% tolerance)";
+      
+      // Update the band colors using proper selectors.
+      if (selection === 1) {
+        $(".vd1_band.band5").css("background-color", digitToColor[firstDigit].toLowerCase());
+        $(".vd1_sband.band6").css("background-color", digitToColor[secondDigit].toLowerCase());
+        $(".vd1_sband.band7").css("background-color", multiplierToColor[chosenMultiplier].toLowerCase());
+        $(".vd1_band.band8").css("background-color", "gold");
+      } else {
+        $(".vd2_band.band9").css("background-color", digitToColor[firstDigit].toLowerCase());
+        $(".vd2_sband.band10").css("background-color", digitToColor[secondDigit].toLowerCase());
+        $(".vd2_sband.band11").css("background-color", multiplierToColor[chosenMultiplier].toLowerCase());
+        $(".vd2_band.band12").css("background-color", "gold");
+      }
+    }
+    
+    // Attach event listeners.
+    $("#R1").on("input", function () {
+      if ($(this).val().trim() === "") {
+        $(".vd1_band.band5, .vd1_sband.band6, .vd1_sband.band7, .vd1_band.band8").css("background-color", "transparent");
+      } else {
+        autoCalculateByResistance(1);
+      }
+    });
+    
+    $("#R2").on("input", function () {
+      if ($(this).val().trim() === "") {
+        $(".vd2_band.band9, .vd2_sband.band10, .vd2_sband.band11, .vd2_band.band12").css("background-color", "transparent");
+      } else {
+        autoCalculateByResistance(2);
+      }
+    });
+
+    $(document).ready(function(){
+      // Attach event listeners on all three fields.
+      $("#VIN, #R1, #R2").on("input", function(){
+        // Check that all three fields have non-empty values.
+        if ($("#VIN").val().trim() !== "" && 
+            $("#R1").val().trim() !== "" && 
+            $("#R2").val().trim() !== "") {
+
+          var vin = parseFloat($("#VIN").val().trim());
+          var r1 = parseFloat($("#R1").val().trim());
+          var r2 = parseFloat($("#R2").val().trim());
+          
+          // Ensure the parsed values are valid and the resistor sum isn't zero.
+          if (!isNaN(vin) && !isNaN(r1) && !isNaN(r2) && (r1 + r2) !== 0) {
+            var vout = vin * (r2 / (r1 + r2));
+            // Display the result with two decimal places.
+            $("#voutResult").text(vout.toFixed(2) + " V");
+          } else {
+            $("#voutResult").text("--");
+          }
+        } else {
+          // If any field is empty, show a placeholder.
+          $("#voutResult").text("--");
+        }
+      });
+    });
     </script>
 </body>
 

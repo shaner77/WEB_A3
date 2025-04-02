@@ -48,11 +48,61 @@ select {
     /* border-radius: 5px; */
   }
   
-  /* Adjust these positions to place the bands exactly over your image */
+  /* band loactions for main page resistor*/
   .band1 { top: 31%; left: 32%; }
   .band2 { top: 34%; left: 42%; }
   .band3 { top: 34%; left: 55%; }
   .band4 { top: 31%; left: 65%; }
+
+
+  .vd1_band {
+    position: absolute;
+    /* Default size and style for the bands - adjust as needed */
+    width: 10px;
+    height: 46px;
+    background-color: red; /* Will later be set dynamically or via a class */
+    /* For smooth edges, you might use: */
+    /* border-radius: 5px; */
+  }
+  .vd1_sband {
+    position: absolute;
+    /* Default size and style for the bands - adjust as needed */
+    width: 10px;
+    height: 38px;
+    background-color: black; /* Will later be set dynamically or via a class */
+    /* For smooth edges, you might use: */
+    /* border-radius: 5px; */
+  }
+
+  .vd2_band {
+    position: absolute;
+    /* Default size and style for the bands - adjust as needed */
+    width: 10px;
+    height: 46px;
+    background-color: red; /* Will later be set dynamically or via a class */
+    /* For smooth edges, you might use: */
+    /* border-radius: 5px; */
+  }
+  .vd2_sband {
+    position: absolute;
+    /* Default size and style for the bands - adjust as needed */
+    width: 10px;
+    height: 38px;
+    background-color: black; /* Will later be set dynamically or via a class */
+    /* For smooth edges, you might use: */
+    /* border-radius: 5px; */
+  }
+
+
+  /* band loactions for voltage divider resistor*/
+  .band5 { top: 24%; left: 18%; }
+  .band6 { top: 26%; left: 23%; }
+  .band7 { top: 26%; left: 28%; }
+  .band8 { top: 24%; left: 34%; }
+  .band9 { top: 24%; left: 65%; }
+  .band10 { top: 26%; left: 70%; }
+  .band11 { top: 26%; left: 75%; }
+  .band12 { top: 24%; left: 81%; }
 
 /* Flex container for the colour mode inputs and the result */
 #byColourContainer {

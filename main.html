@@ -20,11 +20,10 @@
 
 <body>
   <!-- Navigation menu -->
-    <div>
+    <div class="nav_header">
         <div class="container-eg-btn-2">
             <a class="button button-6" onclick="changePage('extras.html')">Extra Features</a>
         </div>
-        <hr>
     </div>
 
   <!-- Resistor image with overlay bands -->
@@ -142,7 +141,7 @@
         }
       });
 
-      // Function to calculate resistance using the Colour Bands (unchanged).
+      // Function to calculate resistance using the Colour Bands.
       function calculateResistance() {
         var band1Value = $("#band1").val();
         var band2Value = $("#band2").val();
