@@ -9,6 +9,17 @@
     }
 }
 
+label,
+input {
+    font-size: 1.5em;
+}
+select {
+    font-size: 1em;
+}
+
+#resultValue{
+    font-size: 1em;
+}
 
 .resistor-container {
     position: relative;
