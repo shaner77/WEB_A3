@@ -9,18 +9,130 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
-  </style>
+    /* Hide modes until one is selected */
+    #VIR_V,
+    #VIR_I,
+    #VIR_R,
+    #VIR_P,
+    #result {
+      display: none;
+    }
+    </style>
 </head>
 
 <body>
 
-    <!--Navigation menu-->
-    <div class="responsive-columns">
-        <div>
-            <button class="nav" style="border-radius: 5px;" onclick="changePage('main.html')">Main Page </button>
+    <!-- Navigation menu -->
+    <div>
+        <div class="container-eg-btn-2">
+            <a class="button button-6" onclick="changePage('main.html')">Main Page</a>
         </div>
+        <hr>
     </div>
 
+    <!-- V=IR Calculator -->
+<div>
+    <h1>V = IR Calculator</h1>
+    <label>Solve For: </label>
+    <select class="form-select" id="VIRselector">
+      <option value="" disabled selected>Select</option>
+      <option value="Voltage">Voltage</option>
+      <option value="Current">Current</option>
+      <option value="Resistance">Resistance</option>
+    </select>
+  
+    <!-- New container for inputs and result display -->
+    <div id="virContainer" style="display: flex; align-items: flex-start; gap: 20px; margin-top: 20px;">
+      
+      <!-- Left container: Input fields -->
+      <div id="virInputs">
+        <!-- By Resistance mode content -->
+        <div id="VIR_V">
+          <br>
+          <label>Voltage: </label>
+          <input type="text" id="vInput" size="9" style="text-align: right;">
+          <label> (V)</label>
+        </div>
+  
+        <div id="VIR_I">
+          <br>
+          <label>Current: </label>
+          <input type="text" id="iInput" size="9" style="text-align: right;">
+          <label> (A)</label>
+        </div>
+  
+        <div id="VIR_R">
+          <br>
+          <label>Resistance: </label>
+          <input type="text" id="rInput" size="7" style="text-align: right;">
+          <label> (Ω)</label>
+        </div>
+  
+      </div>
+  
+      <!-- Right container: Calculation result display -->
+      <aside id="result" style="border: 2px solid black; padding: 10px;">
+        <h2 id="calcType">Calculated</h2>
+        <h2 id="resultValue">--</h2>
+      </aside>
+    </div>
+  </div>
+  <br>
+  <hr>
+
+
+
+    <!-- battery life-->
+    <!-- Voltage divider-->
+
+    <script>
+        $(document).ready(function () {
+        // Show/hide based on mode selection.
+            $("#VIRselector").on("change", function () {
+                let mode = $(this).val();
+                
+                if (mode === "Voltage") {
+                    $("#VIR_V").hide();
+                    $("#VIR_I").show();
+                    $("#VIR_R").show();
+                    $("#result").show();
+                    $("#calcType").text("Voltage");
+                    $("#resultValue").text("-- V");
+                } else if (mode === "Current") {
+                    $("#VIR_V").show();
+                    $("#VIR_I").hide();
+                    $("#VIR_R").show();
+                    $("#result").show();
+                    $("#calcType").text("Current");
+                    $("#resultValue").text("-- A");
+                }else if (mode === "Resistance") {
+                    $("#VIR_V").show();
+                    $("#VIR_I").show();
+                    $("#VIR_R").hide();
+                    $("#VIR_P").show();
+                    $("#result").show();
+                    $("#calcType").text("Resistance");
+                    $("#resultValue").text("-- Ω");
+                }
+
+            });
+            $("#iInput, #rInput").on("input", function() {
+                let mode = $("#VIRselector").val();
+
+                if (mode === "Voltage") {
+                    if ($("#iInput").val().trim() !== "" && $("#rInput").val().trim() !== "") {
+                        let iValue = parseInt($("#iInput").val().trim(), 10);
+                        let rValue = parseInt($("#rInput").val().trim(), 10);
+                        let calculated = iValue * rValue;
+                        $("#resultValue").text(calculated);
+                        $("#resultValue").append(" hi");
+                    } else {
+                        $("#resultValue").text("--");
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
