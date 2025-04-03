@@ -159,11 +159,7 @@ aside#result {
     padding: 10px;
 }
 
-/* navigation header styling */
-.header{
-    border-radius: 0px 0px 25px 25px;
-    background-color: lightgrey;
-}
+
 
 /*Button and button animation settings*/
 .container-eg-btn-2 {
@@ -174,15 +170,13 @@ aside#result {
     align-content: center;
     flex-wrap: wrap;
     margin: 0 auto 10px;
-    padding: .5em;
     line-height: normal;
 }
 .container-eg-btn-2 .button {
-    color: black;
-    background: lightgray;
-    margin: 10px;
-    padding: 12px 15px;
-    border-radius: 15px;
+    color: white;
+    background: #3C096C;
+    padding: 30px 20px;
+    border-radius: 0px 0px 25px 25px;
     border: 2px solid black;
     text-align: center;
     text-transform: uppercase;
@@ -190,6 +184,8 @@ aside#result {
     overflow:hidden; 
     transition: .3s;
     z-index: 1;
+    width: 100%;
+
 }
 .container-eg-btn-2 .button:hover {
     cursor: pointer;
@@ -201,7 +197,7 @@ aside#result {
     content: '';
     width: 0;
     bottom: 0;
-    background: #3C096C;
+    background: #75608a;
     height: 120%;
     left: -10%;
     transform: skewX(20deg);
@@ -218,7 +214,7 @@ aside#result {
     right: 50%;
     bottom: 0;
     height: 4px;
-    background: #3C096C;
+    background: #75608a;
 }
 .container-eg-btn-2 .button-6:after {
     height: 120%;
