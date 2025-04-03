@@ -49,11 +49,6 @@ select {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
 
-.nav_header {
-    border-radius: 0px 0px 25px 25px; 
-    background-color: lightgray;
-}
-
 #resultValue{
     font-size: 1em;
 }
@@ -72,15 +67,6 @@ select {
   }
   .sband {
     position: absolute;
-    /* Default size and style for the bands - adjust as needed */
-    width: 20px;
-    height: 81px;
-    background-color: transparent; /* Will later be set dynamically or via a class */
-    /* For smooth edges, you might use: */
-    /* border-radius: 5px; */
-  }
-  
-  /* band loactions for main page resistor*/
     /* Default size and style for the bands*/
     width: 3%;
     height: 31%;
