@@ -2,25 +2,32 @@
 <html lang="en">
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Profile</title>
-  <!-- Link to your global and device-specific stylesheets -->
+  <!-- Link to your and device-specific stylesheets, functions, and jquery-->
   <link rel="stylesheet" href="style.css">
   <script src="functions.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
   <style>
     /* Hide modes until one is selected */
     #byResistance,
     #byColour {
       display: none;
     }
+    div{
+      justify-content: center;
+      align-items: center;
+    } 
     </style>
+
 </head>
 
 <body>
   <!-- Navigation menu -->
     <div class="nav_header">
+    <div class="header">
         <div class="container-eg-btn-2">
             <a class="button button-6" onclick="changePage('extras.html')">Extra Features</a>
         </div>
@@ -40,13 +47,13 @@
   <hr>
   <br>
 
+  <!-- Mode Selector for main page function -->
   <label>Identifier: </label>
   <select class="form-select" id="resistorMode">
     <option value="" disabled selected>Select</option>
     <option value="Colour">By Colour Bands</option>
     <option value="Resistance">By Resistance Value</option>
   </select>
-
   <br><br>
   <hr>
 
@@ -65,6 +72,7 @@
       <!-- Colour selection area -->
       <div id="byColourSelections">
         <br>
+        <!-- Create options for first band colours -->
         <label>Band 1:</label>
         <select class="form-select" id="band1">
           <option value="" disabled selected>Select</option>
@@ -80,6 +88,7 @@
           <option value="White">White</option>
         </select>
         <br><br>
+        <!-- Create options for secon band colours -->
         <label>Band 2:</label>
         <select class="form-select" id="band2">
           <option value="" disabled selected>Select</option>
@@ -95,6 +104,7 @@
           <option value="White">White</option>
         </select>
         <br><br>
+        <!-- Create options for multiplier band colours -->
         <label>Multiplier:</label>
         <select class="form-select" id="multiplier">
           <option value="" disabled selected>Select</option>
@@ -107,6 +117,7 @@
           <option value="Blue">Blue</option>
         </select>
         <br><br>
+        <!-- Create options for tolerance band colours -->
         <label>Tolerance:</label>
         <select class="form-select" id="tolerence">
           <option value="" disabled selected>Select</option>
