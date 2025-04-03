@@ -1,26 +1,48 @@
-@media (max-width: 550px){
-    .responsive-columns {
+@media (max-width: 500px){
+    h1{
         display: flex;
         flex-wrap: wrap; /* Ensure items wrap on small screens */
-        flex-direction: row; /* Stack items vertically on small screens */
+        flex-direction: row;
     }
-    .responsive-columns .button {
-        width: 40px;
+    h2{
+        display: flex;
+        flex-direction: row;
+        font-size: 1em; /* Make font smaller for small screens */
     }
     img{
-        justify-content: center;
-        width: 80%;
+        justify-content: center; /* centers image when screen small */
+        width: 80vw; 
     }
     #byColour{
         flex-direction: column;
     }
+    #vd1_band,
+    #vd1_sband,
+    #vd2_band,
+    #vd2_sband,
+    #sband,
+    #band {
+        width: 1em;
+        height: 6em;
+        justify-items: center; 
+    }/* formatting for bands to scale with image*/
+
+}
+img{
+    width: 100%;
 }
 
 label,
 input,
 h2 {
     font-size: 1.5em;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    white-space: nowrap;
+}
+h1{
+    font-size: 2em;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    white-space: nowrap;
 }
 select {
     font-size: 1em;
@@ -38,28 +60,66 @@ select {
   
   .band {
     position: absolute;
-    /* Default size and style for the bands - adjust as needed */
-    width: 20px;
-    height: 98px;
-    background-color: transparent; /* Will later be set dynamically or via a class */
-    /* For smooth edges, you might use: */
-    /* border-radius: 5px; */
+    /* Default size and style for the bands*/
+    width: 3%;
+    height: 37%;
+    background-color: transparent; 
   }
   .sband {
     position: absolute;
-    /* Default size and style for the bands - adjust as needed */
-    width: 20px;
-    height: 81px;
-    background-color: transparent; /* Will later be set dynamically or via a class */
-    /* For smooth edges, you might use: */
-    /* border-radius: 5px; */
+    /* Default size and style for the bands*/
+    width: 3%;
+    height: 31%;
+    background-color: transparent;
   }
   
-  /* Adjust these positions to place the bands exactly over your image */
+  /* band loactions for main page resistor*/
   .band1 { top: 31%; left: 32%; }
   .band2 { top: 34%; left: 42%; }
   .band3 { top: 34%; left: 55%; }
   .band4 { top: 31%; left: 65%; }
+
+
+  .vd1_band {
+    position: absolute;
+    /* Default size and style for the bands. Sets default band red*/
+    width: 1.5%;
+    height: 25%;
+    background-color: red; 
+  }
+  .vd1_sband {
+    position: absolute;
+    /* Default size and style for the bands. Sets default band black*/
+    width: 1.5%;
+    height: 20%;
+    background-color: black; 
+  }
+
+  .vd2_band {
+    position: absolute;
+    /* Default size and style for the bands. Sets default band red*/
+    width: 1.5%;
+    height: 25%;
+    background-color: red;
+  }
+  .vd2_sband {
+    position: absolute;
+    /* Default size and style for the bands. Sets default band black*/
+    width: 1.5%;
+    height: 20%;
+    background-color: black;
+  }
+
+
+  /* band loactions for voltage divider resistor*/
+  .band5 { top: 24%; left: 18%; }
+  .band6 { top: 26%; left: 23%; }
+  .band7 { top: 26%; left: 28%; }
+  .band8 { top: 24%; left: 34%; }
+  .band9 { top: 24%; left: 65%; }
+  .band10 { top: 26%; left: 70%; }
+  .band11 { top: 26%; left: 75%; }
+  .band12 { top: 24%; left: 81%; }
 
 /* Flex container for the colour mode inputs and the result */
 #byColourContainer {
@@ -69,7 +129,6 @@ select {
     align-items: flex-start;
 }
 
-/* Selections take one flex unit */
 #byColourSelections {
     flex: 1;
     flex-direction: row;
@@ -77,6 +136,14 @@ select {
 
 /* Aside to display the calculated resistance and tolerance */
 aside#resistorResult {
+    flex: 1;
+    border: 2px solid white;
+    padding: 10px;
+    background: #3C096C;
+    color: white;
+    border-radius: 25px;
+}
+#result{
     flex: 1;
     border: 2px solid white;
     padding: 10px;
@@ -92,11 +159,13 @@ aside#result {
     padding: 10px;
 }
 
+/* navigation header styling */
 .header{
     border-radius: 0px 0px 25px 25px;
     background-color: lightgrey;
 }
 
+/*Button and button animation settings*/
 .container-eg-btn-2 {
     font-family: sans-serif;
     display: flex;
@@ -160,7 +229,7 @@ aside#result {
 .container-eg-btn-2 .button-6:hover:after {
     width: 62%;
 }
-
+ /*For animation timing of button*/
 @keyframes circle-left{
   0% {
     left: -20px;
