@@ -6,10 +6,10 @@
   <title>Profile</title>
   <!-- Link to your global and device-specific stylesheets -->
   <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="functions.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
   <style>
     /* Hide modes until one is selected */
     #byResistance,
@@ -35,7 +35,7 @@
   <div style="text-align: center;">
     <!-- Resistor image container with overlay bands -->
     <div class="resistor-container" style="display: inline-block;">
-      <img src="resistor.png" width="600px" alt="Resistor Image">
+      <img src="resistor.png" alt="Resistor Image">
       <div class="band band1"></div>
       <div class="sband band2"></div>
       <div class="sband band3"></div>
@@ -57,7 +57,7 @@
 
   <!-- By Resistance mode content -->
   <div id="byResistance">
-    <br><br>
+    <br>
     <label>Resistance: </label>
     <!-- Give the input an id so we can attach an event listener -->
     <input type="text" id="resistanceInput" size="5" style="text-align: right;">
@@ -133,6 +133,7 @@
     </div>
   </div>
 
+  
 </body>
 
 </html>
