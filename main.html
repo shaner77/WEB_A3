@@ -29,7 +29,6 @@
         <div class="container-eg-btn-2">
             <a class="button button-6" onclick="changePage('extras.html')">Extra Features</a>
         </div>
-        <hr>
     </div>
 
   <!-- Resistor image with overlay bands -->
@@ -46,15 +45,13 @@
   <hr>
   <br>
 
-  
+  <!-- Mode Selector for main page function -->
   <label>Identifier: </label>
   <select class="form-select" id="resistorMode">
     <option value="" disabled selected>Select</option>
     <option value="Colour">By Colour Bands</option>
     <option value="Resistance">By Resistance Value</option>
   </select>
-
-
   <br><br>
   <hr>
 
@@ -73,6 +70,7 @@
       <!-- Colour selection area -->
       <div id="byColourSelections">
         <br>
+        <!-- Create options for first band colours -->
         <label>Band 1:</label>
         <select class="form-select" id="band1">
           <option value="" disabled selected>Select</option>
@@ -88,6 +86,7 @@
           <option value="White">White</option>
         </select>
         <br><br>
+        <!-- Create options for secon band colours -->
         <label>Band 2:</label>
         <select class="form-select" id="band2">
           <option value="" disabled selected>Select</option>
@@ -103,6 +102,7 @@
           <option value="White">White</option>
         </select>
         <br><br>
+        <!-- Create options for multiplier band colours -->
         <label>Multiplier:</label>
         <select class="form-select" id="multiplier">
           <option value="" disabled selected>Select</option>
@@ -115,6 +115,7 @@
           <option value="Blue">Blue</option>
         </select>
         <br><br>
+        <!-- Create options for tolerance band colours -->
         <label>Tolerance:</label>
         <select class="form-select" id="tolerence">
           <option value="" disabled selected>Select</option>
@@ -132,197 +133,6 @@
     </div>
   </div>
 
-  <script>
-    $(document).ready(function () {
-      // Show/hide based on mode selection.
-      $("#resistorMode").on("change", function () {
-        let mode = $(this).val();
-        if (mode === "Colour") {
-          $("#byColour").show();
-          $("#byResistance").hide();
-        } else if (mode === "Resistance") {
-          $("#byResistance").show();
-          $("#byColour").hide();
-        } else {
-          $("#byColour").hide();
-          $("#byResistance").hide();
-        }
-      });
-
-      // Function to calculate resistance using the Colour Bands (unchanged).
-      function calculateResistance() {
-        var band1Value = $("#band1").val();
-        var band2Value = $("#band2").val();
-        var multiplierValue = $("#multiplier").val();
-        var toleranceColor = $("#tolerence").val();
-
-        if (band1Value && band2Value && multiplierValue) {
-          var digitsMapping = {
-            "Black": 0,
-            "Brown": 1,
-            "Red": 2,
-            "Orange": 3,
-            "Yellow": 4,
-            "Green": 5,
-            "Blue": 6,
-            "Purple": 7,
-            "Gray": 8,
-            "White": 9
-          };
-
-          var multiplierMapping = {
-            "Black": 1,
-            "Brown": 10,
-            "Red": 100,
-            "Orange": 1000,
-            "Yellow": 10000,
-            "Green": 100000,
-            "Blue": 1000000
-          };
-
-          var toleranceMapping = {
-            "Brown": "±1%",
-            "Red": "±2%",
-            "Gold": "±5%",
-            "Gray": "±0.5%"
-          };
-
-          var firstDigit = digitsMapping[band1Value];
-          var secondDigit = digitsMapping[band2Value];
-          var mult = multiplierMapping[multiplierValue];
-          var resistance = ((firstDigit * 10) + secondDigit) * mult;
-          var displayValue;
-          if (resistance >= 1000000) {
-            displayValue = (resistance / 1000000) + " MΩ";
-          } else if (resistance >= 1000) {
-            displayValue = (resistance / 1000) + " kΩ";
-          } else {
-            displayValue = resistance + " Ω";
-          }
-          if (toleranceColor) {
-            displayValue += " (" + toleranceMapping[toleranceColor] + " tolerance)";
-          }
-          $("#resultValue").text(displayValue);
-        } else {
-          $("#resultValue").text("--");
-        }
-      }
-
-      // Function to update overlay band colors from Colour mode selections.
-      function updateBandColors() {
-        var band1Color = $("#band1").val();
-        var band2Color = $("#band2").val();
-        var multiplierColor = $("#multiplier").val();
-        var band4Color = $("#tolerence").val();
-
-        $(".band.band1").css("background-color", band1Color ? band1Color.toLowerCase() : "transparent");
-        $(".band2").css("background-color", band2Color ? band2Color.toLowerCase() : "transparent");
-        $(".band3").css("background-color", multiplierColor ? multiplierColor.toLowerCase() : "transparent");
-        $(".band.band4").css("background-color", band4Color ? band4Color.toLowerCase() : "transparent");
-      }
-
-      $("#band1, #band2, #multiplier, #tolerence").on("change", function () {
-        calculateResistance();
-        updateBandColors();
-      });
-
-      // *** By Resistance mode auto-calculation ***
-
-      // This function attempts to convert an entered resistor value into a
-      // valid 4‑band combination (2 significant digits + multiplier).
-      function autoCalculateByResistance() {
-        var inputVal = $("#resistanceInput").val();
-        var R = parseInt(inputVal);
-        if (!R || R <= 0) {
-          // Invalid input – set overlays to transparent and clear display.
-          $(".band.band1, .band2, .band3, .band.band4").css("background-color", "transparent");
-          $("#resultValue").text("--");
-          return;
-        }
-        // Reverse mapping: numeric digit to color.
-        var digitToColor = {
-          0: "Black",
-          1: "Brown",
-          2: "Red",
-          3: "Orange",
-          4: "Yellow",
-          5: "Green",
-          6: "Blue",
-          7: "Purple",
-          8: "Gray",
-          9: "White"
-        };
-        // Reverse mapping: multiplier (numeric) to color.
-        var multiplierToColor = {
-          1: "Black",
-          10: "Brown",
-          100: "Red",
-          1000: "Orange",
-          10000: "Yellow",
-          100000: "Green",
-          1000000: "Blue"
-        };
-        var allowedMultipliers = [1, 10, 100, 1000, 10000, 100000, 1000000];
-        var validCombo = false;
-        var chosenMultiplier = null;
-        var quotient = null;
-        // Try each allowed multiplier to see if R can be exactly represented.
-        for (var i = 0; i < allowedMultipliers.length; i++) {
-          var m = allowedMultipliers[i];
-          if (R % m === 0) {
-            quotient = R / m;
-            // Allow quotient to be a 1-digit number (pad with 0) or a 2-digit number.
-            if (quotient < 10 || (quotient >= 10 && quotient < 100)) {
-              validCombo = true;
-              chosenMultiplier = m;
-              break;
-            }
-          }
-        }
-        if (!validCombo || quotient === null) {
-          // Input does not yield a valid 4‑band combination.
-          $(".band.band1, .band2, .band3, .band.band4").css("background-color", "transparent");
-          $("#resultValue").text("--");
-          return;
-        }
-        var firstDigit = 0;
-        var secondDigit = 0;
-        if (quotient < 10) {
-          firstDigit = 0;
-          secondDigit = quotient;
-        } else {
-          firstDigit = Math.floor(quotient / 10);
-          secondDigit = quotient % 10;
-        }
-        // Format the resistance for display.
-        var calculatedResistance = ((firstDigit * 10) + secondDigit) * chosenMultiplier;
-        var displayValue;
-        if (calculatedResistance >= 1000000) {
-          displayValue = (calculatedResistance / 1000000) + " MΩ";
-        } else if (calculatedResistance >= 1000) {
-          displayValue = (calculatedResistance / 1000) + " kΩ";
-        } else {
-          displayValue = calculatedResistance + " Ω";
-        }
-        // For Resistance mode, assume a default tolerance of Gold (±5%).
-        displayValue += " (±5% tolerance)";
-        $("#resultValue").text(displayValue);
-
-        // Update overlay bands based on the auto-calculated digits.
-        $(".band.band1").css("background-color", digitToColor[firstDigit].toLowerCase());
-        $(".band2").css("background-color", digitToColor[secondDigit].toLowerCase());
-        $(".band3").css("background-color", multiplierToColor[chosenMultiplier].toLowerCase());
-        $(".band.band4").css("background-color", "gold");
-      }
-
-      // Attach an event listener on the resistance input (for Resistance mode).
-      $("#resistanceInput").on("input", function () {
-        if ($("#resistorMode").val() === "Resistance") {
-          autoCalculateByResistance();
-        }
-      });
-    });
-  </script>
 </body>
 
 </html>
