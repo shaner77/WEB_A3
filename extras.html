@@ -126,6 +126,28 @@
     <hr>
     <br>
 
+<script>
+
+    // Attach event listeners to change colour bands on r1 input
+    $("#R1").on("input", function () {
+      if ($(this).val().trim() === "") {
+        $(".vd1_band.band5, .vd1_sband.band6, .vd1_sband.band7, .vd1_band.band8").css("background-color", "transparent");
+      } else {
+        autoCalculateByResistance(1);
+      }
+    });
+    
+    //Attach event listeners to change colour bands on r2 input
+    $("#R2").on("input", function () {
+      if ($(this).val().trim() === "") {
+        $(".vd2_band.band9, .vd2_sband.band10, .vd2_sband.band11, .vd2_band.band12").css("background-color", "transparent");
+      } else {
+        autoCalculateByResistance(2);
+      }
+    });
+    
+</script>
+
 </body>
 
 </html>
